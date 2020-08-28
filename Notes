@@ -1,0 +1,128 @@
+sudo systemctl start mongod
+
+sudo systemctl status mongod
+
+sudo systemctl stop mongod
+
+mongo
+
+
+
+in case mongod not start
+
+sudo systemctl enable mongod.service
+
+or 
+
+~$ sudo service mongodb stop
+
+~$ sudo rm /var/lib/mongodb/mongod.lock
+
+~$ sudo mongod --repair --dbpath /var/lib/mongodb
+
+~$ sudo mongod --fork --logpath /var/lib/mongodb/mongodb.log --dbpath /var/lib/mongodb
+
+~$ sudo service mongodb start
+
+or
+
+sudo systemctl unmask mongodb
+
+sudo service mongod start
+---------------------------------------------
+-- Insert
+
+db.myCollection.insertOne(
+  {
+	"name": "Ankit", 
+	"age": 22,
+	"location":"Mumbai"
+  }
+)
+
+
+db.myCollection.insertMany([
+  {
+    "name": "navindu", 
+    "age": 22
+  },
+  {
+    "name": "kavindu", 
+    "age": 20
+  },
+
+  {
+    "name": "john doe", 
+    "age": 25,
+    "location": "colombo"
+  }
+])
+
+-- Select All
+to select all rows from collection
+db.inventory.find({})
+or
+db.myCollection.find().pretty()
+or
+db.myCollection.find().forEach(printjson)
+
+-- Select
+
+db.myCollection.find({"name":"Ankit"})
+
+db.myCollection.find({"age":{$gt:24}})
+
+$gt
+$lt
+$ne
+$gte
+$lte
+
+
+hide object id from collection while showing data 
+db.myCollection.find({}, _id: 0).pretty()
+
+
+-- Update
+
+db.myCollection.update({"name":"john doe"},{$set:{"name":"Viraj Todankar","age":30}})
+
+db.myCollection.update({"age":30},{$set:{"location":"Mumbai"}},{multi:true})
+
+
+
+-- delete record
+
+db.collection.remove({"name": "Savi"})
+
+
+-- drop
+
+db.collection.drop()
+
+
+
+
+
+Invetory
+
+var invetories =
+[
+   { item: "canvas", qty: 100, size: { h: 28, w: 35.5, uom: "cm" }, status: "A" },
+   { item: "journal", qty: 25, size: { h: 14, w: 21, uom: "cm" }, status: "A" },
+   { item: "mat", qty: 85, size: { h: 27.9, w: 35.5, uom: "cm" }, status: "A" },
+   { item: "mousepad", qty: 25, size: { h: 19, w: 22.85, uom: "cm" }, status: "P" },
+   { item: "notebook", qty: 50, size: { h: 8.5, w: 11, uom: "in" }, status: "P" },
+   { item: "paper", qty: 100, size: { h: 8.5, w: 11, uom: "in" }, status: "D" },
+   { item: "planner", qty: 75, size: { h: 22.85, w: 30, uom: "cm" }, status: "D" },
+   { item: "postcard", qty: 45, size: { h: 10, w: 15.25, uom: "cm" }, status: "A" },
+   { item: "sketchbook", qty: 80, size: { h: 14, w: 21, uom: "cm" }, status: "A" },
+   { item: "sketch pad", qty: 95, size: { h: 22.85, w: 30.5, uom: "cm" }, status: "A" }
+];
+
+db.inventory.insertMany(invetories);
+
+
+
+
+
